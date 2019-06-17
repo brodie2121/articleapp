@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const path = require('path')
 const checkAuthorization = require('./utils/checkAuthorization')
-const PORT = process.env.PORT || 8080
+const PORT = 3000
 
 const userRoutes = require('./routes/users')
 const indexRoutes = require('./routes/index')
@@ -16,10 +16,11 @@ const pgp = require('pg-promise')({
     }
 });
 
-const options = (
-    "postgres://uephohffnnfrqu:3a01d54bf2fda924ee7d9884edc0389e98bbca48f8de2d74b89dafe2090f7d17@ec2-54-235-86-101.compute-1.amazonaws.com:5432/db9fnm4l9dtho"
-
-)
+const options = {
+    host: 'localhost',
+    database: 'newsdb',
+    password: 'Fiddle123'
+}
 
 const VIEWS_PATH = path.join(__dirname,'/views')
 
@@ -42,9 +43,7 @@ app.use((req, res, next) => {
     next()
 })
 
-db = pgp(CONNECTION_STRING)
-
-
+db = pgp(options)
 
 app.use('/', indexRoutes)
 app.use('/users', checkAuthorization, userRoutes)
