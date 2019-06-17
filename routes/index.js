@@ -86,7 +86,7 @@ router.post('/register', async (req,res) => {
             if(error == null) {
                 db.none('INSERT INTO users(username,password) VALUES($1,$2)',[username,hash])
                 .then(() => {
-                    res.send('SUCCESS')
+                    res.redirect('/login')
                     })
                 }
             })

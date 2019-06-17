@@ -21,7 +21,7 @@ router.post('/add-article', async (req,res) => {
     let userId = req.session.user.userId
 
     await db.none('INSERT INTO articles(title,body,userid) VALUES($1,$2,$3)', [title,description,userId])
-        res.send("SUCCESS")
+        res.redirect('/users/articles')
     })
 
 router.post('/update-article', async (req, res) => {
